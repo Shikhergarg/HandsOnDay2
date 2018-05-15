@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <title>Shopping Cart</title>
+    <style>
+    .card{
+        background-color: #0000000a;
+
+    }
+    .top{
+        border-bottom: 0.5px solid #0000003d;
+        padding: 10px;
+        margin-top: 10px;
+    }
+    .newProduct{
+        text-decoration: none;
+        border: 1px solid tomato;
+        padding: 9px;
+        border-radius: 4%;
+        color: tomato;
+        background: no-repeat;
+    }
+    .fas{
+        color: tomato;
+        border: 1px solid tomato;
+        border-radius: 50%;
+        padding: 10px;
+    }
+    .btnClass{
+        background-color: tomato;
+        color: white;
+    }
+    .prodName{
+        border: 1px solid #00000029;
+        padding: 7px;
+        text-align: center;
+        border-radius: 4%;
+    }
+    a:hover {
+        color:tomato;
+        text-decoration: none;
+    }
+    a{
+        color:tomato;
+    } 
+    #logoutbtn:active, #logoutbtn:visited, #logoutbtn:focus{
+        outline: none;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="container" id="productElement" style="margin-top:13px;">
+        <div class="row col top">
+            <a href="index.html"><h2 style="float:left;color:tomato;">Shopping Cart</h2></a>
+           
+            <div class="col" id="userAuthenticated">
+                <span style="float:right;">
+                    <a class="newProduct" href="course.html" style="text-decoration: none">Course</a>
+					<a class="newProduct" href="students.html" style="text-decoration: none">Students</a>
+					<a class="newProduct" href="subjects.html" style="text-decoration: none">Subjects</a>
+					<a class="newProduct" href="teachers.html" style="text-decoration: none">Teachers</a>
+                    &nbsp;&nbsp;
+					<a class="newProduct" href="addstudent.html" style="text-decoration: none">Add student</a>
+                    <a href="cartItems.html"  style="text-decoration: none;"><i class="fas fa-shopping-cart"></i></a>
+                </span>
+            </div>
+        </div>
+
+        <br><br>
+		<h2 id="heading" align="center">Add Subject</h2><br />
+        <form >
+						<span class="spanClass"><label class="labelClass">SubjectById:</label><input v-model="sid" class="form-control" style="max-width: 400px;" type="text"></span><br /><br />
+            
+                        <select class="form-control" style="max-width:200px;" name="batchDropdown" id="batchDropdown" v-model="selected">
+                            <option disabled value="">Please select one</option>
+                            <option v-bind:value='course.courId' v-for="course in courses">
+                                {{course.courName}}
+                            </option>
+                        </select>
+						
+                    <span style="text-align:right;" id="buttonspan"><button class="btn btn-primary" v-on:click="addsubject()">Allocate batch</button></span>
+		</form>  
+    </div>
+
+    <script>
+     let app = new Vue({
+            el: '#productElement',
+            data: {
+                students: []
+            },
+            mounted(){
+                    this.getstudents();
+            },
+            methods: {
+                getstudents(){
+                    axios.get('http://localhost:2222/api/students')
+                        .then((response) => {  
+						
+                            this.students= response.data
+							console.log(this.students);
+                        })
+                },
+
+              
+            }
+        })
+    </script>
+</body>
+<footer class="page-footer font-small blue pt-4 mt-4">
+    <div class="container-fluid text-center text-md-left">
+    
+</footer>
+</html>
